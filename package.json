@@ -11,6 +11,10 @@
   },
   "dependencies": {
     "@faker-js/faker": "^10.6.0",
-    "mysql2": "^3.24.6"
+    "ejs": "^7.0.2",
+    "express": "^5.3.0",
+    "method-override": "^3.0.0",
+    "mysql2": "^3.24.6",
+    "uuid": "^14.0.3"
   }
 }
