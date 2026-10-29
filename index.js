@@ -112,6 +112,48 @@ app.patch("/user/:id", (req, res) => {
   };
 });
 
+app.get("/users/add", (req, res) => {
+  res.render("add.ejs");
+});
+
+app.post("/users/add", (req, res) => {
+  let {id, username, email, password} = req.body;
+
+  let q = `INSERT INTO user(id, username, email, password) VALUES(?, ?, ?, ?)`;
+
+  let values = [id, username, email, password];
+
+  try {
+    connection.query(q, values, (err, result) => {
+      res.redirect("/users");
+    });
+  } catch(err) {
+    res.send(err);
+  }
+});
+
+app.delete("/users/:id", (req, res) => {
+  let {id} = req.params;
+  let q = `SELECT * FROM user WHERE id = '${id}'`;
+
+  try {
+    connection.query(q, (err, result) => {
+      if(err) throw err;
+      let q2 = `DELETE FROM user WHERE id = '${id}'`;
+
+      try {
+        connection.query(q2, (err, result) => {
+          res.redirect("/users");
+        });
+      } catch(err) {
+        res.send(err);
+      };
+    });
+  } catch(err) {
+    res.send(err);
+  };
+});
+
 app.listen("8080", () => {
   console.log("Serever successfully running at port 8080");
 });
